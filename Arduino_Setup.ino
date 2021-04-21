@@ -1,5 +1,6 @@
 /*
 By: Sharwin Patil
+Contact me at: patil.sha@northeastern.edu
 
 Here we'll cover how to get started with Arduino
 for the NURobotics Intro Class.
