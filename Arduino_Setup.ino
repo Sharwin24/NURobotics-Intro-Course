@@ -34,4 +34,6 @@ void setup() {
 void loop() {
     // This function loops over again and runs the code
     // within the function forever
+    // LED Blink, without delay, using the millis timer
+    digitalWrite(LED_BUILTIN, millis() % 512 > 256);
 }
