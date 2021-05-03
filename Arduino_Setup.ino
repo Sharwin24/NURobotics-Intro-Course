@@ -24,6 +24,8 @@ The .h at the end of the Library denotes that it is a
 declarations and setup for a Library or Class.
 */
 
+#include <Servo.h>
+
 // Setup Function
 void setup() {
     // This function runs once upon starting the program
