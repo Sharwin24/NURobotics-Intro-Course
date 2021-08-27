@@ -18,6 +18,8 @@
 #define LeftMotorDirPin1 7    //Left Motor direction pin 1 to MODEL-X IN3
 #define LeftMotorDirPin2 8    //Left Motor direction pin 1 to MODEL-X IN4
 
+#include <Servo.h>
+
 /*motor control*/
 void go_Advance(void)  //Forward
 {
@@ -105,4 +107,5 @@ void setup() {
 }
 
 void loop() {
+    go_Advance(5);
 }
