@@ -43,6 +43,7 @@ void setup() {
     pinMode(ENA, OUTPUT);
     pinMode(ENB, OUTPUT);
     Serial.println("=============================================================");
+    // adding a line of code
 }
 
 void loop() {
