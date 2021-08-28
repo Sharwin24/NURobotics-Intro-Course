@@ -42,10 +42,11 @@ void setup() {
     pinMode(IN4, OUTPUT);
     pinMode(ENA, OUTPUT);
     pinMode(ENB, OUTPUT);
+    Serial.println("=============================================================");
 }
 
 void loop() {
-     Serial.print("Hello");
+  Serial.println("---------------------------------------------------------------");
     /*
     //go forward
     digitalWrite(IN1, HIGH);
@@ -82,4 +83,3 @@ void loop() {
     delay(2000);
     */
 }
-// compile
