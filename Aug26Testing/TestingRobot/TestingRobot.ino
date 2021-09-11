@@ -42,13 +42,10 @@ void setup() {
     pinMode(IN4, OUTPUT);
     pinMode(ENA, OUTPUT);
     pinMode(ENB, OUTPUT);
-    Serial.println("=============================================================");
-    // adding a line of code
 }
 
 void loop() {
-  Serial.println("---------------------------------------------------------------");
-    /*
+    
     //go forward
     digitalWrite(IN1, HIGH);
     digitalWrite(IN2, LOW);
@@ -82,5 +79,5 @@ void loop() {
     digitalWrite(ENB, LOW);  //Motor is off
     digitalWrite(ENA, LOW);
     delay(2000);
-    */
+    
 }
