@@ -1,4 +1,5 @@
 // Line Tracker Sensor I/O setup
+// Remove Inverse operator to track bright lines on dark backgrounds
 #define LT_R !digitalRead(10) // Right sensor
 #define LT_M !digitalRead(4) // Middle sensor
 #define LT_L !digitalRead(2) // Left sensor
@@ -11,11 +12,13 @@
 #define IN3 9
 #define IN4 11
 
-// Constant for car's speed, adjust as needed
+// Constants for program
 #define carSpeed 250
+#define stopTime 30000
 
 // Variables for tracking the state of the robot, timers, etc.
 unsigned long startTime;
+
 
 // Move Forward
 void forward() {
@@ -68,7 +71,7 @@ void setup() {
 
 // Track and follow a dark line
 void loop() {
-  if (LT_M) {
+  if (LT_M) { // If middle sensor reads line, move forward
     forward();
   }
   else if (LT_R) {
@@ -80,8 +83,9 @@ void loop() {
     while(LT_L); // Turn left until sensor no longer reads line
   }
   // Stop the car after 30,000 ms (30s)
-  if (startTime > 30000) {
+  if (startTime > stopTime) {
     stop();
   }
   
 }
+
