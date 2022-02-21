@@ -16,12 +16,14 @@
  */
 void forward(int carSpeed)  // Forward
 {
-    analogWrite(ENA, carSpeed);
-    analogWrite(ENB, carSpeed);
+    // Setting Direction and Power Pins
     digitalWrite(IN1, HIGH);
     digitalWrite(IN2, LOW);
     digitalWrite(IN3, LOW);
     digitalWrite(IN4, HIGH);
+    // Write speed to 'A' and 'B' MotorGroups
+    analogWrite(ENA, carSpeed);
+    analogWrite(ENB, carSpeed);
 }
 
 /**
