@@ -20,15 +20,14 @@ int forwardDistance = 0;
 
 // Ultrasonic distance measurement Sub function
 int getDistance() {
-    // Create a square wave to send out
+    // Create a square wave to send out and read
     digitalWrite(Trig, LOW);
     delayMicroseconds(2);
     digitalWrite(Trig, HIGH);
     delayMicroseconds(20);
     digitalWrite(Trig, LOW);
-
     float Fdistance = pulseIn(Echo, HIGH);
-    Fdistance = Fdistance / 58;
+    Fdistance = Fdistance / 58; // 58 for cm, 148 for in
     return (int)Fdistance;
 }
 
