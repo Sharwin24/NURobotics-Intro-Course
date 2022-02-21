@@ -79,6 +79,8 @@ void stop() {
 void setup() {
     Serial.begin(9600);
     myservo.attach(3, 700, 2400);  // attach servo on pin 3 to servo object and force min/max to [700,2400]
+    pinMode(Trig, OUTPUT);
+    pinMode(Echo, INPUT);
     pinMode(IN1, OUTPUT);
     pinMode(IN2, OUTPUT);
     pinMode(IN3, OUTPUT);
