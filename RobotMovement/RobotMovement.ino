@@ -54,7 +54,7 @@ void turnLeft(int carSpeed) {
  * cap at 255
  */
 void turnRight(int carSpeed) {
-    // TODO: Complete thjis function
+    // TODO: Complete this function
 }
 
 void stop() {
