@@ -59,6 +59,27 @@ void turnRight(int carSpeed) {
     // TODO: Complete this function
 }
 
+/**
+ * @brief Moves the robot in a swing turn to the right. A swing turn is when only one side of the robot's drivebase is powered.
+ *
+ * @param carSpeed an integer representing the car's speed.
+ * This value is capped at 255 and passing in a higher value will
+ * cap at 255
+ */
+void swingTurnRight(int carSpeed) {
+    // TODO: Complete this function
+}
+/**
+ * @brief Moves the robot in a swing turn to the left. A swing turn is when only one side of the robot's drivebase is powered.
+ *
+ * @param carSpeed an integer representing the car's speed.
+ * This value is capped at 255 and passing in a higher value will
+ * cap at 255
+ */
+void swingTurnRight(int carSpeed) {
+    // TODO: Complete this function
+}
+
 void stop() {
     digitalWrite(ENA, 0);
     digitalWrite(ENB, 0);
