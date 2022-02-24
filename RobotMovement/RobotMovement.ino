@@ -80,6 +80,10 @@ void swingTurnRight(int carSpeed) {
     // TODO: Complete this function
 }
 
+/**
+ * @brief Stops the robot's drive motors.
+ * 
+ */
 void stop() {
     digitalWrite(ENA, 0);
     digitalWrite(ENB, 0);
