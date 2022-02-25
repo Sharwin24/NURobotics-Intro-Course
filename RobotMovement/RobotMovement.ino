@@ -76,7 +76,7 @@ void swingTurnRight(int carSpeed) {
  * This value is capped at 255 and passing in a higher value will
  * cap at 255
  */
-void swingTurnRight(int carSpeed) {
+void swingTurnLeft(int carSpeed) {
     // TODO: Complete this function
 }
 
