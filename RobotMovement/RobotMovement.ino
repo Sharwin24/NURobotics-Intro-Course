@@ -45,7 +45,6 @@ void back(int carSpeed) {
  * cap at 255
  */
 void turnLeft(int carSpeed) {
-    // TODO: Complete this function
     digitalWrite(IN1, LOW);
     digitalWrite(IN2, HIGH);
     digitalWrite(IN3, LOW);
