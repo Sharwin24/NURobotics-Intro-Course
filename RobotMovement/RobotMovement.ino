@@ -46,6 +46,12 @@ void back(int carSpeed) {
  */
 void turnLeft(int carSpeed) {
     // TODO: Complete this function
+    digitalWrite(IN1, LOW);
+    digitalWrite(IN2, HIGH);
+    digitalWrite(IN3, LOW);
+    digitalWrite(IN4, HIGH);
+    analogWrite(ENA, carSpeed);
+    analogWrite(ENB, carSpeed);
 }
 
 /**
