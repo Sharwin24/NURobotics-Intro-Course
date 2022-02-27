@@ -7,6 +7,15 @@
 
 #include <Servo.h>
 
+//     Right motor truth table
+// Here are some handy tables to show the various modes of operation.
+//  ENB         IN3             IN4         Description
+//  LOW   Not Applicable   Not Applicable   Motor is off
+//  HIGH        LOW             LOW         Motor is stopped (brakes)
+//  HIGH        LOW             HIGH        Motor is on and turning forwards
+//  HIGH        HIGH            LOW         Motor is on and turning backwards
+//  HIGH        HIGH            HIGH        Motor is stopped (brakes)
+
 /**
  * @brief Moves the robot forward with the given speed
  *
@@ -34,7 +43,12 @@ void forward(int carSpeed)  // Forward
  * cap at 255
  */
 void back(int carSpeed) {
-    // TODO: Complete this function
+    digitalWrite(IN1, LOW);
+    digitalWrite(IN2, HIGH);
+    digitalWrite(IN3, HIGH);
+    digitalWrite(IN4, HIGH);
+    analogWrite(ENA, carSpeed);
+    analogWrite(ENB, carSpeed);
 }
 
 /**
@@ -61,7 +75,12 @@ void turnLeft(int carSpeed) {
  * cap at 255
  */
 void turnRight(int carSpeed) {
-    // TODO: Complete this function
+    digitalWrite(IN1, HIGH);
+    digitalWrite(IN2, LOW);
+    digitalWrite(IN3, HIGH);
+    digitalWrite(IN4, LOW);
+    analogWrite(ENA, carSpeed);
+    analogWrite(ENB, carSpeed);
 }
 
 /**
@@ -72,7 +91,12 @@ void turnRight(int carSpeed) {
  * cap at 255
  */
 void swingTurnRight(int carSpeed) {
-    // TODO: Complete this function
+    digitalWrite(IN1, HIGH);
+    digitalWrite(IN2, LOW);
+    digitalWrite(IN3, LOW);
+    digitalWrite(IN4, HIGH);
+    analogWrite(ENA, carSpeed);
+    analogWrite(ENB, 0.25 * carSpeed);
 }
 /**
  * @brief Moves the robot in a swing turn to the left. A swing turn is when only one side of the robot's drivebase is powered.
@@ -82,7 +106,12 @@ void swingTurnRight(int carSpeed) {
  * cap at 255
  */
 void swingTurnLeft(int carSpeed) {
-    // TODO: Complete this function
+    digitalWrite(IN1, HIGH);
+    digitalWrite(IN2, LOW);
+    digitalWrite(IN3, LOW);
+    digitalWrite(IN4, HIGH);
+    analogWrite(ENA, 0.25 * carSpeed);
+    analogWrite(ENB, carSpeed);
 }
 
 /**
