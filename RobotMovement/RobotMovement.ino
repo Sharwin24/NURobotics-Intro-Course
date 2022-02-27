@@ -141,7 +141,8 @@ void loop() {
     delay(2000);
     // stopping the bot...
     stop();
-
+    // wait for 5 seconds before running again
+    delay(5000);
     // try writing code to move the bot in a square and stop!
     // make it go fast on two sides and slow on the other two
     // and challenge yourselves to make it a square and not a weirdly shaped rectangle!
