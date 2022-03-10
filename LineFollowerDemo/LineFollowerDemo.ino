@@ -13,7 +13,6 @@
 #define IN4 11
 
 // Constants for program
-#define carSpeed 250
 #define stopTime 3000
 
 // Variables for tracking the state of the robot, timers, etc.
