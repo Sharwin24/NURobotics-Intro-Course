@@ -49,7 +49,7 @@ void back(int carSpeed = 255) {
     digitalWrite(IN1, LOW);
     digitalWrite(IN2, HIGH);
     digitalWrite(IN3, HIGH);
-    digitalWrite(IN4, HIGH);
+    digitalWrite(IN4, LOW);
     analogWrite(ENA, carSpeed);
     analogWrite(ENB, carSpeed);
 }

@@ -9,7 +9,7 @@
 
 //     Left motor truth table
 // Here are some handy tables to show the various modes of operation.
-//  ENA         IN3             IN4         Description
+//  ENA         IN1             IN2         Description
 //  LOW   Not Applicable   Not Applicable   Motor is off
 //  HIGH        LOW             LOW         Motor is stopped (brakes)
 //  HIGH        LOW             HIGH        Motor is on and turning forwards
@@ -55,7 +55,7 @@ void back(int carSpeed) {
     digitalWrite(IN1, LOW);
     digitalWrite(IN2, HIGH);
     digitalWrite(IN3, HIGH);
-    digitalWrite(IN4, HIGH);
+    digitalWrite(IN4, LOW);
     analogWrite(ENA, carSpeed);
     analogWrite(ENB, carSpeed);
 }
@@ -125,7 +125,7 @@ void swingTurnLeft(int carSpeed) {
 
 /**
  * @brief Stops the robot's drive motors.
- * 
+ *
  */
 void stop() {
     digitalWrite(ENA, 0);
