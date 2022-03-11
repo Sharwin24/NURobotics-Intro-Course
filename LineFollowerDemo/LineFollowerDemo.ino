@@ -13,12 +13,11 @@
 #define IN4 11
 
 // Constants for program
+#define turnSpeed 115
 #define stopTime 3000
 
 // Variables for tracking the state of the robot, timers, etc.
 unsigned long startTime;
-
-// Movement functions from RobotMovement
 
 /**
  * @brief Moves the robot forward with the given speed
@@ -27,7 +26,7 @@ unsigned long startTime;
  * This value is capped at 255 and passing in a higher value will
  * cap at 255
  */
-void forward(int carSpeed)  // Forward
+void forward(int carSpeed = 255)  // Forward
 {
     // Setting Direction and Power Pins
     digitalWrite(IN1, HIGH);
@@ -46,7 +45,7 @@ void forward(int carSpeed)  // Forward
  * This value is capped at 255 and passing in a higher value will
  * cap at 255
  */
-void back(int carSpeed) {
+void back(int carSpeed = 255) {
     digitalWrite(IN1, LOW);
     digitalWrite(IN2, HIGH);
     digitalWrite(IN3, HIGH);
@@ -62,13 +61,13 @@ void back(int carSpeed) {
  * This value is capped at 255 and passing in a higher value will
  * cap at 255
  */
-void turnLeft(int carSpeed) {
+void turnLeft() {
     digitalWrite(IN1, LOW);
     digitalWrite(IN2, HIGH);
     digitalWrite(IN3, LOW);
     digitalWrite(IN4, HIGH);
-    analogWrite(ENA, carSpeed);
-    analogWrite(ENB, carSpeed);
+    analogWrite(ENA, turnSpeed);
+    analogWrite(ENB, turnSpeed);
 }
 
 /**
@@ -78,13 +77,13 @@ void turnLeft(int carSpeed) {
  * This value is capped at 255 and passing in a higher value will
  * cap at 255
  */
-void turnRight(int carSpeed) {
+void turnRight() {
     digitalWrite(IN1, HIGH);
     digitalWrite(IN2, LOW);
     digitalWrite(IN3, HIGH);
     digitalWrite(IN4, LOW);
-    analogWrite(ENA, carSpeed);
-    analogWrite(ENB, carSpeed);
+    analogWrite(ENA, turnSpeed);
+    analogWrite(ENB, turnSpeed);
 }
 
 /**
@@ -95,8 +94,6 @@ void stop() {
     digitalWrite(ENA, 0);
     digitalWrite(ENB, 0);
 }
-
-// End movement functions from RobotMovement
 
 // Setup Pinmodes for sensor
 void setup() {
@@ -113,9 +110,21 @@ void loop() {
     // If middle sensor reads line, move forward
     // If the right sensor reads line, turn right until sensor no longer reads line
     // if the left sensor reads line, turn left until sensor no longer reads line
-
     // Stop the car after 30,000 ms (30s)
-    if (startTime > stopTime) {
+    if (millis() > stopTime) {
         stop();
+    } else if (LT_M) {
+        forward();
+    } else if (LT_R) {
+        right();
+        while (LT_R) {
+            // Turn right until sensor no longer reads line
+        }
+    } else if (LT_L) {
+        left();
+        while (LT_L) {
+            // Turn left until sensor no longer reads line
+        }
     }
+    delay(50);
 }
