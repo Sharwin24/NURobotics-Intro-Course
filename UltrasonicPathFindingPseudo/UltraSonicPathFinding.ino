@@ -1,14 +1,3 @@
-#include <Servo.h>  //servo library
-Servo myservo;      // create servo object to control servo
-
-// Ultrasonic pins
-int Echo = A4;
-int Trig = A5;
-int rightDistance = 0;
-int leftDistance = 0;
-int forwardDistance = 0;
-
-//define L298n module IO Pin
 #define ENA 5
 #define ENB 6
 #define IN1 7
@@ -16,128 +5,145 @@ int forwardDistance = 0;
 #define IN3 9
 #define IN4 11
 
-// Ultrasonic functions ----------------------------
+#include <Servo.h>
+Servo myservo;  // create servo object to control servo
+
+int Echo = A4;
+int Trig = A5;
+
+// Variables for saved ultrasonic distance measurements
+int rightDistance = 0, leftDistance = 0, middleDistance = 0;
 
 // Ultrasonic distance measurement Sub function
 int getDistance() {
-    // Create a square wave to send out and read
+    // trigger an ultrasonic wave for 20 microseconds
     digitalWrite(Trig, LOW);
     delayMicroseconds(2);
     digitalWrite(Trig, HIGH);
     delayMicroseconds(20);
     digitalWrite(Trig, LOW);
+    // calculation converting time until signal returned to distance
     float Fdistance = pulseIn(Echo, HIGH);
-    Fdistance = Fdistance / 58; // 58 for cm, 148 for in
+    Fdistance = Fdistance / 58;
+    // returns an integer as the distance (in cm) sensed
     return (int)Fdistance;
 }
 
-// -------------------------------------------------
-
-// Move functions ----------------------------------------
-void forward() {
-    digitalWrite(ENA, HIGH);  //enable L298n A channel
-    digitalWrite(ENB, HIGH);  //enable L298n B channel
-    digitalWrite(IN1, HIGH);  //set IN1 hight level
-    digitalWrite(IN2, LOW);   //set IN2 low level
-    digitalWrite(IN3, LOW);   //set IN3 low level
-    digitalWrite(IN4, HIGH);  //set IN4 hight level
+/**
+ * @brief Moves the robot forward with the given speed
+ *
+ * @param carSpeed an integer representing the car's speed.
+ * This value is capped at 255 and passing in a higher value will
+ * cap at 255
+ */
+void forward(int carSpeed)  // Forward
+{
+    // Setting Direction and Power Pins
+    digitalWrite(IN1, HIGH);
+    digitalWrite(IN2, LOW);
+    digitalWrite(IN3, LOW);
+    digitalWrite(IN4, HIGH);
+    // Write speed to 'A' and 'B' MotorGroups
+    analogWrite(ENA, carSpeed);
+    analogWrite(ENB, carSpeed);
 }
 
-void back() {
-    digitalWrite(ENA, HIGH);
-    digitalWrite(ENB, HIGH);
+/**
+ * @brief Moves the robot backwards with the given speed
+ *
+ * @param carSpeed an integer representing the car's speed.
+ * This value is capped at 255 and passing in a higher value will
+ * cap at 255
+ */
+void back(int carSpeed) {
     digitalWrite(IN1, LOW);
     digitalWrite(IN2, HIGH);
     digitalWrite(IN3, HIGH);
     digitalWrite(IN4, LOW);
+    analogWrite(ENA, carSpeed);
+    analogWrite(ENB, carSpeed);
 }
 
-void left() {
-    digitalWrite(ENA, HIGH);
-    digitalWrite(ENB, HIGH);
+/**
+ * @brief Turns the robot left with the given speed
+ *
+ * @param carSpeed an integer representing the car's speed.
+ * This value is capped at 255 and passing in a higher value will
+ * cap at 255
+ */
+void turnLeft(int carSpeed) {
     digitalWrite(IN1, LOW);
     digitalWrite(IN2, HIGH);
     digitalWrite(IN3, LOW);
     digitalWrite(IN4, HIGH);
+    analogWrite(ENA, carSpeed);
+    analogWrite(ENB, carSpeed);
 }
 
-void right() {
-    digitalWrite(ENA, HIGH);
-    digitalWrite(ENB, HIGH);
+/**
+ * @brief Turns the robot right with the given speed
+ *
+ * @param carSpeed an integer representing the car's speed.
+ * This value is capped at 255 and passing in a higher value will
+ * cap at 255
+ */
+void turnRight(int carSpeed) {
     digitalWrite(IN1, HIGH);
     digitalWrite(IN2, LOW);
     digitalWrite(IN3, HIGH);
     digitalWrite(IN4, LOW);
+    analogWrite(ENA, carSpeed);
+    analogWrite(ENB, carSpeed);
 }
 
+/**
+ * @brief Stops the robot's drive motors.
+ *
+ */
 void stop() {
-    digitalWrite(ENA, LOW);
-    digitalWrite(ENB, LOW);
+    digitalWrite(ENA, 0);
+    digitalWrite(ENB, 0);
 }
-// -----------------------------------------------
 
 void setup() {
-    Serial.begin(9600);
-    myservo.attach(3, 700, 2400);  // attach servo on pin 3 to servo object and force min/max to [700,2400]
-    pinMode(Trig, OUTPUT);
-    pinMode(Echo, INPUT);
     pinMode(IN1, OUTPUT);
     pinMode(IN2, OUTPUT);
     pinMode(IN3, OUTPUT);
     pinMode(IN4, OUTPUT);
     pinMode(ENA, OUTPUT);
     pinMode(ENB, OUTPUT);
-    stop();  // Optional: Ensures car is stopped during setup and before loop()
+    pinMode(Echo, INPUT);
+    pinMode(Trig, OUTPUT);
+    myservo.attach(3, 700, 2400);  // attach servo on pin 3 to servo object with min/max: 700/2400
+    Serial.begin(9600);
+    stop();
 }
 
 void loop() {
-    // If close to a wall looking forward {
-    // Stop the car
-    // Look right and take measurement
-    // Look left and take measurement
-    // If right wall is farther than left wall, move right
-    // If left wall is farther than right wall, move left
-    // If both left and right walls are close to the robot, then back up
-    // If right and left are equal, move forward
-    // }
-    // else move forward
-}
-
-void loop() {
-    myservo.write(90);  //setservo position according to scaled value
+    myservo.write(90);  // setservo position according to scaled value (forward)
     delay(500);
-    forwardDistance = getDistance();
 
-    if (forwardDistance <= 40) {
+    middleDistance = getDistance();  // Obtain distance from looking forward
+    // if we sense an object <= 40 cm away...
+    if (middleDistance <= 40) {
         stop();
-        delay(500);
+
+        // Look right and take measurement
         myservo.write(10);
         delay(1000);
         rightDistance = getDistance();
 
-        delay(500);
-        myservo.write(90);
-        delay(1000);
-        myservo.write(180);
-        delay(1000);
-        leftDistance = getDistance();
+        // Look left and take measurement
+        // TODO...
 
-        delay(500);
-        myservo.write(90);
-        delay(1000);
-        if (rightDistance > leftDistance) {
-            right();
-            delay(360);
-        } else if (rightDistance < leftDistance) {
-            left();
-            delay(360);
-        } else if ((rightDistance <= 40) || (leftDistance <= 40)) {
-            back();
-            delay(180);
-        } else {
-            forward();
-        }
+        // Compare left and right measurements
+        // If either are <= 20cm, then we're too close and we need to back up
+        // If there is more space on the left than right, go left
+        // If there is more space on the right than left, go right
+        // If left and right are equal or far away, continue forward
     } else {
         forward();
     }
+    // Program delay
+    delay(10);
 }
