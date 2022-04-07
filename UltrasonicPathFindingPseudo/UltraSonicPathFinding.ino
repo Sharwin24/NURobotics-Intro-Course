@@ -122,28 +122,54 @@ void setup() {
 void loop() {
     myservo.write(90);  // setservo position according to scaled value (forward)
     delay(500);
+    middleDistance = Distance_test();  // grab the distance with the servo forwards
 
-    middleDistance = getDistance();  // Obtain distance from looking forward
     // if we sense an object <= 40 cm away...
     if (middleDistance <= 40) {
         stop();
 
-        // Look right and take measurement
+        // turn the servo/sensor right and take a distance measurement
+        delay(500);
         myservo.write(10);
         delay(1000);
-        rightDistance = getDistance();
+        rightDistance = Distance_test();
 
-        // Look left and take measurement
-        // TODO...
+        // turn the servo/sensor left and take a distance measurement
+        delay(500);
+        myservo.write(90);
+        delay(1000);
+        myservo.write(180);
+        delay(1000);
+        leftDistance = Distance_test();
 
-        // Compare left and right measurements
-        // If either are <= 20cm, then we're too close and we need to back up
-        // If there is more space on the left than right, go left
-        // If there is more space on the right than left, go right
-        // If left and right are equal or far away, continue forward
-    } else {
+        delay(500);
+        myservo.write(90);
+        delay(1000);
+
+        // go right if there's more space to the right
+        if (rightDistance > leftDistance) {
+            right();
+            delay(360);
+        }
+        // go left if there's more space to the left
+        else if (rightDistance < leftDistance) {
+            left();
+            delay(360);
+        }
+        // go back if we're too close
+        else if ((rightDistance <= 40) || (leftDistance <= 40)) {
+            back();
+            delay(180);
+        }
+        // otherwise we're good to go forwards
+        else {
+            forward();
+        }
+    }
+    // go forwards if no object within 40 cm
+    else {
         forward();
     }
     // Program delay
-    delay(10);
+    delay(20);
 }
