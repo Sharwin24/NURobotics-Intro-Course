@@ -122,7 +122,7 @@ void setup() {
 void loop() {
     myservo.write(90);  // setservo position according to scaled value (forward)
     delay(500);
-    middleDistance = Distance_test();  // grab the distance with the servo forwards
+    middleDistance = getDistance();  // grab the distance with the servo forwards
 
     // if we sense an object <= 40 cm away...
     if (middleDistance <= 40) {
@@ -132,7 +132,7 @@ void loop() {
         delay(500);
         myservo.write(10);
         delay(1000);
-        rightDistance = Distance_test();
+        rightDistance = getDistance();
 
         // turn the servo/sensor left and take a distance measurement
         delay(500);
@@ -140,7 +140,7 @@ void loop() {
         delay(1000);
         myservo.write(180);
         delay(1000);
-        leftDistance = Distance_test();
+        leftDistance = getDistance();
 
         delay(500);
         myservo.write(90);
